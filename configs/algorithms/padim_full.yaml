@@ -1,0 +1,64 @@
+# Configuration for PaDiM without dimension reduction
+
+experiment:
+  name: "metal_plate_padim_full_dimensions"
+  seed: 42
+  device: "cpu"
+
+data:
+  train_dir: "data/anomaly_dataset/metal_plate/train/good"
+  test_dir_bad: "data/anomaly_dataset/metal_plate/test/scratches"
+  test_dir_bad_masks: "data/anomaly_dataset/metal_plate/ground_truth/scratches"
+  test_dir_good: "data/anomaly_dataset/metal_plate/test/good"
+  class_name: "metal_plate"
+
+  transforms:
+    resize: 224
+    center_crop: 224
+    normalize:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+
+  batch_size: 8
+  num_workers: 0
+  shuffle: false
+
+encoder:
+  type: "resnet"
+  backbone: "resnet18"
+  layers: ["layer1", "layer2", "layer3"]
+  pretrained: true
+
+# PaDiM without dimension reduction
+algorithm:
+  type: "padim"
+  random_seed: 42
+
+  padim:
+    dimension_reduction: null  # No reduction - use all dimensions
+    total_dimensions: 448
+    gaussian_smoothing_sigma: 2
+    covariance_regularization: 0.01
+
+cache:
+  enabled: true
+  cache_dir: "outputs/cache_full"
+  train_features_file: "train_features.pkl"
+  use_cached_if_exists: true
+
+evaluation:
+  metrics: ["roc_auc", "pixel_roc_auc", "f1"]
+  threshold_method: "f1"
+
+visualization:
+  enabled: true
+  save_roc_curves: true
+  save_heatmaps: true
+  max_samples: null
+  morphology_kernel_size: 4
+
+output:
+  save_dir: "outputs/resnet18_padim_full"
+  model_dir: "outputs/resnet18_padim_full/models"
+  plots_dir: "outputs/resnet18_padim_full/visualizations"
+  results_file: "outputs/resnet18_padim_full/results.json"
