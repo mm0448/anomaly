@@ -101,7 +101,8 @@ class AnomalyDetectionPipeline:
         print("="*60)
         algorithm = create_algorithm(
             self.config['algorithm'],
-            encoder_dims=encoder.get_feature_dimensions()
+            encoder_dims=encoder.get_feature_dimensions(),
+            device=self.device
         )
         algorithm.fit(train_features)
 
