@@ -2,6 +2,8 @@
 
 A modular, extensible framework for industrial anomaly detection using deep learning.
 
+<img width="3569" height="2969" alt="image" src="https://github.com/user-attachments/assets/9760f01c-30ca-40ce-9395-fb7b261fb9a0" />
+
 <img width="2369" height="1768" alt="image" src="https://github.com/user-attachments/assets/70a8a614-1b72-4082-b38d-213be3e32808" />
 
 ### Installation
