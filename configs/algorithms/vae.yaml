@@ -1,0 +1,75 @@
+# Configuration for VAE-based anomaly detection
+
+experiment:
+  name: "metal_plate_vae"
+  seed: 42
+  device: "cpu"  # or "cuda:0"
+
+data:
+  train_dir: "data/anomaly_dataset/metal_plate/train/good"
+  test_dir_bad: "data/anomaly_dataset/metal_plate/test/scratches"
+  test_dir_bad_masks: "data/anomaly_dataset/metal_plate/ground_truth/scratches"
+  test_dir_good: "data/anomaly_dataset/metal_plate/test/good"
+  class_name: "metal_plate"
+
+  transforms:
+    resize: 240
+    center_crop: 224
+    normalize:
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+
+  batch_size: 8
+  num_workers: 0
+  shuffle: false
+
+# Feature encoder (same as PaDiM)
+encoder:
+  type: "resnet"
+  backbone: "resnet18"
+  layers: ["layer1", "layer2", "layer3"]
+  pretrained: true
+
+# VAE-based anomaly detection
+algorithm:
+  type: "vae"
+  random_seed: 42
+
+  vae:
+    # VAE architecture
+    dim_h: 128          # Hidden layer dimensions
+    dim_z: 16           # Latent space dimensions
+
+    # Training parameters
+    learning_rate: 0.001
+    num_epochs: 50
+    batch_size: 128     # Batch size for VAE training (not data loading)
+    beta: 4.0           # Weight for KL divergence (1.0 = standard VAE)
+    validation_split: 0.2  # Fraction of images for validation (0.2 = 20%)
+
+# Feature caching (reuse cached features from PaDiM runs)
+cache:
+  enabled: true
+  cache_dir: "outputs/cache"
+  train_features_file: "train_features.pkl"
+  use_cached_if_exists: true
+
+# Evaluation
+evaluation:
+  metrics: ["roc_auc", "pixel_roc_auc", "f1"]
+  threshold_method: "f1"
+
+# Visualization
+visualization:
+  enabled: true
+  save_roc_curves: true
+  save_heatmaps: true
+  max_samples: null
+  morphology_kernel_size: 4
+
+# Output paths
+output:
+  save_dir: "outputs/vae_metal_plate"
+  model_dir: "outputs/vae_metal_plate/models"
+  plots_dir: "outputs/vae_metal_plate/visualizations"
+  results_file: "outputs/vae_metal_plate/results.json"

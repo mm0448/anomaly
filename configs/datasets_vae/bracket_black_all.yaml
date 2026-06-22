@@ -1,0 +1,66 @@
+algorithm:
+  random_seed: 42
+  type: vae
+  vae:
+    batch_size: 128
+    beta: 4.0
+    dim_h: 128
+    dim_z: 16
+    learning_rate: 0.001
+    num_epochs: 50
+    validation_split: 0.2
+cache:
+  cache_dir: outputs/cache
+  enabled: true
+  train_features_file: train_features.pkl
+  use_cached_if_exists: true
+data:
+  batch_size: 8
+  class_name: bracket_black
+  num_workers: 0
+  shuffle: false
+  test_dir_bad: data/anomaly_dataset/bracket_black/test/hole
+  test_dir_bad_masks: data/anomaly_dataset/bracket_black/ground_truth/hole
+  test_dir_good: data/anomaly_dataset/bracket_black/test/good
+  train_dir: data/anomaly_dataset/bracket_black/train/good
+  transforms:
+    center_crop: 224
+    normalize:
+      mean:
+      - 0.485
+      - 0.456
+      - 0.406
+      std:
+      - 0.229
+      - 0.224
+      - 0.225
+    resize: 240
+encoder:
+  backbone: resnet18
+  layers:
+  - layer1
+  - layer2
+  - layer3
+  pretrained: true
+  type: resnet
+evaluation:
+  metrics:
+  - roc_auc
+  - pixel_roc_auc
+  - f1
+  threshold_method: f1
+experiment:
+  device: cpu
+  name: bracket_black_vae_all
+  seed: 42
+output:
+  model_dir: outputs/vae/bracket_black_all/models
+  plots_dir: outputs/vae/bracket_black_all/visualizations
+  results_file: outputs/vae/bracket_black_all/results.json
+  save_dir: outputs/vae/bracket_black_all
+visualization:
+  enabled: true
+  max_samples: null
+  morphology_kernel_size: 4
+  save_heatmaps: true
+  save_roc_curves: true
