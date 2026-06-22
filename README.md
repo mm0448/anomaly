@@ -8,8 +8,12 @@ A modular, extensible framework for industrial anomaly detection using deep lear
 
 <img width="3569" height="2969" alt="image" src="https://github.com/user-attachments/assets/9760f01c-30ca-40ce-9395-fb7b261fb9a0" />
 
+### Currently Supported Encoder Backbones
+- ResNet (18/34/50/101)
+
 <img width="2369" height="1768" alt="image" src="https://github.com/user-attachments/assets/70a8a614-1b72-4082-b38d-213be3e32808" />
 
+### Example Images
 <img width="1039" height="236" alt="image" src="https://github.com/user-attachments/assets/51fe8e98-4199-404e-93fc-452944ea0193" />
 
 <img width="1039" height="236" alt="image" src="https://github.com/user-attachments/assets/aaffc3cd-3546-4d87-85a0-fcfd658bb155" />
