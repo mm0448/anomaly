@@ -16,6 +16,9 @@ pip install -e .
 python scripts/train_evaluate.py --config configs/default_padim.yaml
 ```
 
+<img width="2369" height="1768" alt="image" src="https://github.com/user-attachments/assets/70a8a614-1b72-4082-b38d-213be3e32808" />
+
+
 ### Directory Structure
 
 ```
